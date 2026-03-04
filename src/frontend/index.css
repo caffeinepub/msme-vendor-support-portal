@@ -1,0 +1,351 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Fonts ──────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/assets/fonts/CabinetGrotesk-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("/assets/fonts/Sora-Variable.woff2") format("woff2");
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* ── MSME Portal Design Tokens ── */
+    --background: 0.97 0.004 245;
+    --foreground: 0.15 0.025 240;
+
+    --card: 1 0 0;
+    --card-foreground: 0.15 0.025 240;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.15 0.025 240;
+
+    --primary: 0.38 0.14 255;
+    --primary-foreground: 0.98 0.005 240;
+
+    --secondary: 0.93 0.035 240;
+    --secondary-foreground: 0.28 0.1 250;
+
+    --muted: 0.94 0.018 240;
+    --muted-foreground: 0.52 0.04 240;
+
+    /* Accent: warm saffron */
+    --accent: 0.82 0.16 65;
+    --accent-foreground: 0.15 0.025 240;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.88 0.025 240;
+    --input: 0.88 0.025 240;
+    --ring: 0.38 0.14 255;
+
+    /* Chart colors */
+    --chart-1: 0.5 0.2 255;
+    --chart-2: 0.6 0.15 190;
+    --chart-3: 0.7 0.12 140;
+    --chart-4: 0.65 0.18 35;
+    --chart-5: 0.55 0.22 300;
+
+    /* Sidebar */
+    --sidebar: 0.22 0.08 255;
+    --sidebar-foreground: 0.95 0.015 240;
+    --sidebar-primary: 0.65 0.15 255;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.32 0.1 255;
+    --sidebar-accent-foreground: 0.95 0.015 240;
+    --sidebar-border: 0.35 0.1 255;
+    --sidebar-ring: 0.65 0.15 255;
+
+    /* ── Core portal palette (5 curated hues) ── */
+    --portal-deep:      0.20 0.12 260;   /* deep navy-indigo */
+    --portal-mid:       0.36 0.16 255;   /* royal blue */
+    --portal-light:     0.58 0.14 255;   /* sky blue */
+    --portal-pale:      0.955 0.018 245; /* cool almost-white */
+    --portal-gold:      0.75 0.17 82;    /* warm saffron gold */
+    --portal-gold-deep: 0.56 0.21 72;    /* burnt gold */
+    --portal-teal:      0.58 0.14 200;   /* accent teal */
+    --portal-green:     0.60 0.16 158;   /* accent green */
+
+    /* ── Scheme category semantic tokens ── */
+    --scheme-blue:   0.52 0.14 255;
+    --scheme-green:  0.55 0.16 155;
+    --scheme-purple: 0.52 0.18 300;
+    --scheme-orange: 0.62 0.18 52;
+    --scheme-lime:   0.58 0.18 135;
+    --scheme-teal:   0.55 0.16 195;
+    --scheme-red:    0.54 0.19 22;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Sora", sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Cabinet Grotesk", sans-serif;
+  }
+}
+
+/* ── Utility animations ──────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 oklch(var(--portal-mid) / 0.4); }
+  70%  { box-shadow: 0 0 0 10px oklch(var(--portal-mid) / 0); }
+  100% { box-shadow: 0 0 0 0 oklch(var(--portal-mid) / 0); }
+}
+
+.animate-fade-up     { animation: fade-up 0.6s cubic-bezier(0.22,1,0.36,1) forwards; }
+.animate-fade-in     { animation: fade-in 0.5s ease forwards; }
+.animate-count-up    { animation: count-up 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
+.animate-slide-right { animation: slide-in-right 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* ── Scheme card hover ──────────────────────────────────────── */
+.scheme-card {
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.25s ease;
+}
+.scheme-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px oklch(var(--portal-mid) / 0.18),
+              0 4px 12px oklch(var(--portal-mid) / 0.1);
+}
+
+/* ── Table row hover ────────────────────────────────────────── */
+.compare-row {
+  transition: background-color 0.18s ease;
+}
+.compare-row:hover {
+  background-color: oklch(var(--portal-pale));
+}
+
+/* ── Stepper ────────────────────────────────────────────────── */
+.step-item {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.step-item:hover {
+  transform: scale(1.04);
+}
+
+/* ── Nav link ────────────────────────────────────────────────── */
+.nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: oklch(var(--portal-gold));
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* ── Hero gradient ──────────────────────────────────────────── */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%,  oklch(0.30 0.20 280 / 0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 70%,  oklch(0.28 0.18 250 / 0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 55% 20%,  oklch(0.50 0.22 270 / 0.3) 0%, transparent 50%),
+    linear-gradient(160deg, oklch(var(--portal-deep)) 0%, oklch(0.18 0.14 255) 40%, oklch(0.25 0.16 265) 100%);
+  position: relative;
+}
+
+.hero-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── Stats bar ──────────────────────────────────────────────── */
+.stats-bar {
+  background: oklch(var(--portal-deep));
+  border-top: 3px solid oklch(var(--portal-gold));
+  border-bottom: 1px solid oklch(0.30 0.12 255);
+  position: relative;
+}
+
+.stats-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    oklch(0.25 0.14 265 / 0.8) 0%,
+    oklch(0.20 0.10 255 / 0.5) 50%,
+    oklch(0.25 0.14 265 / 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Observe-in class (initial state) ──────────────────────── */
+.observe-init {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.observe-visible {
+  animation: fade-up 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: oklch(var(--portal-pale)); }
+::-webkit-scrollbar-thumb { background: oklch(var(--portal-light) / 0.5); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: oklch(var(--portal-mid) / 0.7); }
+
+/* ── Result card ─────────────────────────────────────────────── */
+.result-card-enter {
+  animation: slide-in-right 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+/* ── Section header accent ──────────────────────────────────── */
+.section-accent-line {
+  display: inline-block;
+  width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg,
+    oklch(var(--portal-gold)) 0%,
+    oklch(var(--portal-mid)) 100%
+  );
+  margin-bottom: 0.75rem;
+}
+
+/* ── Scheme card icon variants (token-based) ─────────────────── */
+.scheme-icon-blue   { background: oklch(var(--scheme-blue) / 0.12);   color: oklch(var(--scheme-blue)); }
+.scheme-icon-green  { background: oklch(var(--scheme-green) / 0.12);  color: oklch(var(--scheme-green)); }
+.scheme-icon-purple { background: oklch(var(--scheme-purple) / 0.12); color: oklch(var(--scheme-purple)); }
+.scheme-icon-orange { background: oklch(var(--scheme-orange) / 0.12); color: oklch(var(--scheme-orange)); }
+.scheme-icon-lime   { background: oklch(var(--scheme-lime) / 0.12);   color: oklch(var(--scheme-lime)); }
+.scheme-icon-teal   { background: oklch(var(--scheme-teal) / 0.12);   color: oklch(var(--scheme-teal)); }
+.scheme-icon-red    { background: oklch(var(--scheme-red) / 0.12);    color: oklch(var(--scheme-red)); }
+
+/* ── Benefit card icon variants ─────────────────────────────── */
+.benefit-icon-blue   { background: oklch(var(--scheme-blue) / 0.10);   color: oklch(var(--scheme-blue)); }
+.benefit-icon-green  { background: oklch(var(--scheme-green) / 0.10);  color: oklch(var(--scheme-green)); }
+.benefit-icon-purple { background: oklch(var(--scheme-purple) / 0.10); color: oklch(var(--scheme-purple)); }
+.benefit-icon-orange { background: oklch(var(--scheme-orange) / 0.10); color: oklch(var(--scheme-orange)); }
+
+/* ── Hero diagonal divider ──────────────────────────────────── */
+.hero-divider {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  overflow: hidden;
+  line-height: 0;
+}
+.hero-divider svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+
+/* ── Symbiosis badge pulse ──────────────────────────────────── */
+@keyframes badge-glow {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(var(--portal-gold) / 0.4); }
+  50%       { box-shadow: 0 0 0 6px oklch(var(--portal-gold) / 0); }
+}
+.symbiosis-badge {
+  animation: badge-glow 2.5s ease-in-out infinite;
+}
+
+/* ── Vendor story cards ──────────────────────────────────────── */
+.vendor-card-amber {
+  background: linear-gradient(135deg,
+    oklch(0.97 0.06 80 / 0.5) 0%,
+    oklch(0.96 0.04 65 / 0.4) 100%
+  );
+  border: 1px solid oklch(var(--portal-gold) / 0.25);
+}
+.vendor-card-blue {
+  background: linear-gradient(135deg,
+    oklch(0.97 0.04 245 / 0.6) 0%,
+    oklch(0.96 0.03 235 / 0.5) 100%
+  );
+  border: 1px solid oklch(var(--portal-mid) / 0.2);
+}
+.vendor-card-rose {
+  background: linear-gradient(135deg,
+    oklch(0.97 0.04 15 / 0.5) 0%,
+    oklch(0.96 0.06 355 / 0.4) 100%
+  );
+  border: 1px solid oklch(var(--scheme-red) / 0.2);
+}
+
+/* ── Official portal CTA ─────────────────────────────────────── */
+.portal-cta-card {
+  background: linear-gradient(135deg,
+    oklch(var(--portal-deep)) 0%,
+    oklch(0.28 0.14 260) 100%
+  );
+  border-left: 4px solid oklch(var(--portal-gold));
+  position: relative;
+  overflow: hidden;
+}
+.portal-cta-card::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: oklch(var(--portal-mid) / 0.15);
+  pointer-events: none;
+}
